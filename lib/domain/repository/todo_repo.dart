@@ -4,7 +4,7 @@ repository for Todo
 this is where we define our methods
 */
 
-import 'package:project_todo/domain/Model/todo.dart';
+import 'package:project_todo/domain/model/todo.dart';
 
 abstract class TodoRepo {
   // get the list of todos
