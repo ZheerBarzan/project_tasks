@@ -1,7 +1,7 @@
 /*
 
--TODO Model
-a Todo object is compoesed of these fields:
+-Task Model
+a Task object is compoesed of these fields:
 
 -ID
 -Title
@@ -15,19 +15,19 @@ _______________________________________
 
 */
 
-class Todo {
+class Task {
   final int id;
   final String title;
   final String? description;
   final bool isCompleted;
-  Todo(
+  Task(
       {required this.id,
       required this.title,
       this.description,
       this.isCompleted = false});
 
-  Todo toggleCompletion() {
-    return Todo(
+  Task toggleCompletion() {
+    return Task(
         id: id,
         title: title,
         description: description,

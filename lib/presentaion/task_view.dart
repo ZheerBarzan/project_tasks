@@ -7,20 +7,20 @@ using bloc builder
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_todo/domain/model/todo.dart';
-import 'package:project_todo/presentaion/todo_cubit.dart';
+import 'package:project_task/domain/model/task.dart';
+import 'package:project_task/presentaion/task_cubit.dart';
 
-class TodoView extends StatelessWidget {
-  const TodoView({super.key});
+class TaskView extends StatelessWidget {
+  const TaskView({super.key});
 
-  void _showAddTodoBox(BuildContext context) {
-    final todoCubit = context.read<TodoCubit>();
+  void _showAddTaskBox(BuildContext context) {
+    final taskCubit = context.read<TaskCubit>();
     final textController = TextEditingController();
 
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Add Todo'),
+              title: const Text('Add Task'),
               content: TextField(controller: textController),
               actions: [
                 MaterialButton(
@@ -33,7 +33,7 @@ class TodoView extends StatelessWidget {
                 MaterialButton(
                   child: const Text("Add"),
                   onPressed: () {
-                    todoCubit.addTodo(textController.text);
+                    taskCubit.addTask(textController.text);
                     Navigator.of(context).pop();
                     textController.clear();
                   },
@@ -44,28 +44,28 @@ class TodoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todoCubit = context.read<TodoCubit>();
+    final taskCubit = context.read<TaskCubit>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo'),
+        title: const Text('Task'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddTodoBox(context),
+        onPressed: () => _showAddTaskBox(context),
         child: const Icon(Icons.add),
       ),
-      body: BlocBuilder<TodoCubit, List<Todo>>(
-        builder: (context, todos) {
+      body: BlocBuilder<TaskCubit, List<Task>>(
+        builder: (context, tasks) {
           return ListView.builder(
-            itemCount: todos.length,
+            itemCount: tasks.length,
             itemBuilder: (context, index) {
-              final task = todos[index];
+              final task = tasks[index];
               return ListTile(
                 title: Text(task.title),
 
                 //check box
                 leading: Checkbox(
                     value: task.isCompleted,
-                    onChanged: (value) => todoCubit.toggleTodo(task)),
+                    onChanged: (value) => taskCubit.toggleTask(task)),
               );
             },
           );
