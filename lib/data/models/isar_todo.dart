@@ -8,7 +8,7 @@ converts todo model to isar model to store it in isar
 import 'package:isar/isar.dart';
 import 'package:project_todo/domain/model/todo.dart';
 
-// to generate isar object run : dart run build_runner build
+// to generate isar object run :
 part 'isar_todo.g.dart';
 
 @collection
