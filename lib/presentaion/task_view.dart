@@ -8,6 +8,7 @@ using bloc builder
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_task/domain/model/task.dart';
+import 'package:project_task/presentaion/components/my_drawer.dart';
 import 'package:project_task/presentaion/task_cubit.dart';
 
 class TaskView extends StatelessWidget {
@@ -46,8 +47,10 @@ class TaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskCubit = context.read<TaskCubit>();
     return Scaffold(
+      drawer: const MyDrawer(),
       appBar: AppBar(
-        title: const Text('Task'),
+        centerTitle: true,
+        title: const Text('T A S K S'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskBox(context),
@@ -59,13 +62,29 @@ class TaskView extends StatelessWidget {
             itemCount: tasks.length,
             itemBuilder: (context, index) {
               final task = tasks[index];
-              return ListTile(
-                title: Text(task.title),
+              return Container(
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                child: Row(
+                  children: [
+                    Checkbox(
+                        value: task.isCompleted,
+                        onChanged: (value) => taskCubit.toggleTask(task)),
+                    !task.isCompleted
+                        ? Text(task.title)
+                        : Text(
+                            task.title,
+                            style: const TextStyle(
+                                decoration: TextDecoration.lineThrough),
+                          ),
+                  ],
+                ),
 
                 //check box
-                leading: Checkbox(
-                    value: task.isCompleted,
-                    onChanged: (value) => taskCubit.toggleTask(task)),
               );
             },
           );

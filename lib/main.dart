@@ -23,11 +23,12 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final TaskRepo taskRepo;
-  MyApp({super.key, required this.taskRepo});
+  const MyApp({super.key, required this.taskRepo});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Task',
       theme: ThemeData(
         primarySwatch: Colors.blue,
