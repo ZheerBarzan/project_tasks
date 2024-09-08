@@ -33,4 +33,12 @@ class Task {
         description: description,
         isCompleted: !isCompleted);
   }
+
+  Task copyWith({String? title, bool? isCompleted}) {
+    return Task(
+      title: title ?? this.title,
+      id: this.id,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
+  }
 }

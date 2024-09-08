@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_task/domain/model/task.dart';
 import 'package:project_task/presentaion/components/my_drawer.dart';
 import 'package:project_task/presentaion/task_cubit.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskView extends StatelessWidget {
   const TaskView({super.key});
@@ -43,6 +44,37 @@ class TaskView extends StatelessWidget {
             ));
   }
 
+  void _showUpdateTaskBox(BuildContext context, Task task) {
+    final taskCubit = context.read<TaskCubit>();
+    final textController = TextEditingController();
+    textController.text = task.title;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Update Task'),
+        content: TextField(controller: textController),
+        actions: [
+          MaterialButton(
+            child: const Text("cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              textController.clear();
+            },
+          ),
+          MaterialButton(
+            child: const Text("Update"),
+            onPressed: () {
+              taskCubit.updateTask(task, textController.text);
+              Navigator.of(context).pop();
+              textController.clear();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final taskCubit = context.read<TaskCubit>();
@@ -62,29 +94,50 @@ class TaskView extends StatelessWidget {
             itemCount: tasks.length,
             itemBuilder: (context, index) {
               final task = tasks[index];
-              return Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                child: Row(
+              return Slidable(
+                endActionPane: ActionPane(
+                  motion: const StretchMotion(),
                   children: [
-                    Checkbox(
-                        value: task.isCompleted,
-                        onChanged: (value) => taskCubit.toggleTask(task)),
-                    !task.isCompleted
-                        ? Text(task.title)
-                        : Text(
-                            task.title,
-                            style: const TextStyle(
-                                decoration: TextDecoration.lineThrough),
-                          ),
+                    SlidableAction(
+                      onPressed: (context) => _showUpdateTaskBox(context, task),
+                      backgroundColor: Colors.grey.shade800,
+                      icon: Icons.edit,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    SlidableAction(
+                      onPressed: (value) => taskCubit.deleteTasks(task),
+                      backgroundColor: Colors.redAccent,
+                      icon: Icons.delete,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ],
                 ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          value: task.isCompleted,
+                          onChanged: (value) => taskCubit.toggleTask(
+                                task,
+                              )),
+                      !task.isCompleted
+                          ? Text(task.title)
+                          : Text(
+                              task.title,
+                              style: const TextStyle(
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                    ],
+                  ),
 
-                //check box
+                  //check box
+                ),
               );
             },
           );

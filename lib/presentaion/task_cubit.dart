@@ -36,6 +36,14 @@ class TaskCubit extends Cubit<List<Task>> {
   }
 
   // toggole
+  // update
+  Future<void> updateTask(Task task, String text) async {
+    final updatedTask =
+        task.copyWith(title: text); // Assuming you have a copyWith method
+    await taskRepo.updateTask(updatedTask);
+    await loadTasks();
+  }
+
   Future<void> toggleTask(Task task) async {
     final newTask = task.toggleCompletion();
 
