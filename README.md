@@ -1,6 +1,6 @@
-# project_todo
+# project_task
 
-A new Flutter project.
+a task complating application
 
 ## Getting Started
 
