@@ -5,6 +5,8 @@ import 'package:project_task/data/models/isar_task.dart';
 import 'package:project_task/data/repository/isar_task_repo.dart';
 import 'package:project_task/domain/repository/task_repo.dart';
 import 'package:project_task/presentaion/task_page.dart';
+import 'package:project_task/theme/dark_theme.dart';
+import 'package:project_task/theme/light_theme.dart';
 import 'package:project_task/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Task',
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      theme: lightMode,
+      darkTheme: darkMode,
       home: TaskPage(taskRepo: taskRepo),
     );
   }
