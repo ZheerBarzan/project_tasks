@@ -8,7 +8,6 @@ using bloc builder
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_task/domain/model/task.dart';
-import 'package:project_task/presentaion/components/my_drawer.dart';
 import 'package:project_task/presentaion/task_cubit.dart';
 
 class TaskView extends StatelessWidget {
@@ -47,7 +46,6 @@ class TaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskCubit = context.read<TaskCubit>();
     return Scaffold(
-      drawer: const MyDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('T A S K S'),

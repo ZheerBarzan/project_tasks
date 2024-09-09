@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:project_task/presentaion/components/my_drawer.dart';
 import 'package:project_task/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +15,6 @@ class SettingsPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 10,
       ),
-      drawer: const MyDrawer(),
       body: Container(
         padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.all(20),
