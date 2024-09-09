@@ -67,7 +67,7 @@ class TaskView extends StatelessWidget {
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 child: Row(
                   children: [
@@ -75,7 +75,11 @@ class TaskView extends StatelessWidget {
                         value: task.isCompleted,
                         onChanged: (value) => taskCubit.toggleTask(task)),
                     !task.isCompleted
-                        ? Text(task.title)
+                        ? Text(task.title,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary))
                         : Text(
                             task.title,
                             style: const TextStyle(

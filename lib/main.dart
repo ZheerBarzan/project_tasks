@@ -5,6 +5,8 @@ import 'package:project_task/data/models/isar_task.dart';
 import 'package:project_task/data/repository/isar_task_repo.dart';
 import 'package:project_task/domain/repository/task_repo.dart';
 import 'package:project_task/presentaion/task_page.dart';
+import 'package:project_task/theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +20,9 @@ void main() async {
   final isarTaskRepo = IsarTaskRepo(isar);
 
   //run
-  runApp(MyApp(taskRepo: isarTaskRepo));
+  runApp(ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(taskRepo: isarTaskRepo)));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,9 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Task',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: Provider.of<ThemeProvider>(context).themeData,
       home: TaskPage(taskRepo: taskRepo),
     );
   }
